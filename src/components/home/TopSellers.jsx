@@ -1,8 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import AuthorImage from "../../images/author_thumbnail.jpg";
+import axios from "axios";
+import Skeleton from "../UI/Skeleton";
 
 const TopSellers = () => {
+  const [topSellersData, setTopSellersData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    async function fetchTopSellers() {
+      try {
+        const response = await axios.get(
+          "https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers"
+        );
+        if (response.data.length > 0) {
+          setTopSellersData(response.data);
+        }
+      } catch (error) {
+        alert("Error Fetching Sellers Data", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchTopSellers();
+  }, []);
+
+
   return (
     <section id="section-popular" className="pb-5">
       <div className="container">
@@ -15,24 +39,39 @@ const TopSellers = () => {
           </div>
           <div className="col-md-12">
             <ol className="author_list">
-              {new Array(12).fill(0).map((_, index) => (
-                <li key={index}>
-                  <div className="author_list_pp">
-                    <Link to="/author">
-                      <img
-                        className="lazy pp-author"
-                        src={AuthorImage}
-                        alt=""
-                      />
-                      <i className="fa fa-check"></i>
-                    </Link>
-                  </div>
-                  <div className="author_list_info">
-                    <Link to="/author">Monica Lucas</Link>
-                    <span>2.1 ETH</span>
-                  </div>
-                </li>
-              ))}
+              {isLoading
+                ? new Array(12).fill(0).map((data) => (
+                    <li key={data.id}>
+                      <div className="author_list_pp">
+                        <Skeleton width={50} height={50} borderRadius="50%" />
+                        <i className="fa fa-check"></i>
+                      </div>
+                      <div className="author_list_info">
+                        <Skeleton width={80} height={15} borderRadius={8} />
+                        <Skeleton width={60} height={15} borderRadius={8} />
+                      </div>
+                    </li>
+                  ))
+                : topSellersData.map((data) => (
+                    <li key={data.id}>
+                      <div className="author_list_pp">
+                        <Link to={`/author/${data.authorId}`}>
+                          <img
+                            className="lazy pp-author"
+                            src={data.authorImage}
+                            alt=""
+                          />
+                          <i className="fa fa-check"></i>
+                        </Link>
+                      </div>
+                      <div className="author_list_info">
+                        <Link to={`/author/${data.authorId}`}>
+                          {data.authorName}
+                        </Link>
+                        <span>{data.price} ETH</span>
+                      </div>
+                    </li>
+                  ))}
             </ol>
           </div>
         </div>

@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import AuthorImage from "../../images/author_thumbnail.jpg";
 import nftImage from "../../images/nftImage.jpg";
+import axios from "axios";
+import Skeleton from "../UI/Skeleton";
+import CountDown from "../UI/CountDown";
+
 
 const ExploreItems = () => {
+
+  const [exploreData, setExploreData] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+
+
+
   return (
     <>
       <div>

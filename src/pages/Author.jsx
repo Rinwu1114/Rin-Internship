@@ -12,7 +12,6 @@ const Author = () => {
   const [totalfollowers, setTotalFollowers] = useState(0)
   const [isFollowing, setIsFollowing] =useState(false)
 
-
   useEffect(() => {
     setIsLoading(true)
     async function fetchAuthorData() {

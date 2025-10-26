@@ -1,8 +1,16 @@
 import React, { useEffect } from "react";
 import SubHeader from "../images/subheader.jpg";
 import ExploreItems from "../components/explore/ExploreItems";
+import AOSanimations  from "../components/UI/AOSanimations";
+import 'aos/dist/aos.css'
+
 
 const Explore = () => {
+
+    useEffect(() => {
+    AOSanimations();
+  }, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -29,7 +37,7 @@ const Explore = () => {
           </div>
         </section>
 
-        <section aria-label="section">
+        <section aria-label="section" data-aos="fade-in" data-aos-delay="400">
           <div className="container">
             <div className="row">
               <ExploreItems />

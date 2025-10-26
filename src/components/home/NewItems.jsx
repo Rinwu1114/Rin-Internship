@@ -3,8 +3,13 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Skeleton from "../UI/Skeleton";
 import CountDown from "../UI/CountDown";
+import  AOSanimations  from "../UI/AOSanimations";
+import 'aos/dist/aos.css'
 
 const NewItems = () => {
+      useEffect(() => {
+    AOSanimations()
+  }, [])
 
   const [ newItems, setNewItems ] = useState([])
   const [ isLoading, setIsLoading ] = useState(false)
@@ -34,13 +39,13 @@ const NewItems = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>New Items</h2>
+              <h2 data-aos="fade-in">New Items</h2>
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
           {isLoading ? 
-          new Array(4).fill(0).map((data) => (
-            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={data.id}>
+          new Array(4).fill(0).map((_, index) => (
+            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" data-aos="fade-in" key={index}>
               <div className="nft__item">
                 <div className="author_list_pp">
                   <Skeleton
@@ -95,7 +100,7 @@ const NewItems = () => {
               </div>
             </div>
           )) : newItems.map((data) =>(
-            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" key={data.id}>
+            <div className="col-lg-3 col-md-6 col-sm-6 col-xs-12" data-aos="fade-in" key={data.id}>
               <div className="nft__item">
                 <div className="author_list_pp">
                   <Link

@@ -9,6 +9,8 @@ const Author = () => {
   const { authorId } = useParams()
   const [authorData, setAuthorData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [totalfollowers, setTotalFollowers] = useState(0)
+  const [isFollowing, setIsFollowing] =useState(false)
 
   useEffect(() => {
     setIsLoading(true)
@@ -27,7 +29,21 @@ const Author = () => {
     fetchAuthorData()
   }, [authorId])
 
-  console.log(authorData)
+
+useEffect(() => {
+  if (authorData && authorData.followers !== undefined) {
+    setTotalFollowers(authorData.followers); 
+  }
+}, [authorData]);
+
+const handleFollow = () => {
+  if (isFollowing) {
+    setTotalFollowers(prev => prev - 1); 
+  } else {
+    setTotalFollowers(prev => prev + 1); 
+  }
+  setIsFollowing(!isFollowing);
+};
 
   return (
     <div id="wrapper">
@@ -80,7 +96,8 @@ const Author = () => {
                       <div className="profile_follower"> <Skeleton
                   width={100} height={15} borderRadius={8}
                   /></div>
-                      <Link to="#" className="btn-main">
+                      <Link to="#" className="btn-main"
+                      onClick={handleFollow}>
                         Follow
                       </Link>
                     </div>
@@ -124,9 +141,10 @@ const Author = () => {
                   </div>
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
-                      <div className="profile_follower">{authorData.followers} followers</div>
-                      <Link to="#" className="btn-main">
-                        Follow
+                      <div className="profile_follower">{totalfollowers} followers</div>
+                      <Link to="#" className="btn-main"
+                      onClick={handleFollow}>
+                        {isFollowing ? "Unfollow" : "Follow"}
                       </Link>
                     </div>
                   </div>

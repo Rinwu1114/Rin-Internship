@@ -30,10 +30,6 @@ async function fetchHotCollections() {
   }
     fetchHotCollections();
   }, []);
-
-  
-
-  console.log(hotCollectionsData);
   
   const sliderSettings = {
     loop: true ,
@@ -71,9 +67,38 @@ async function fetchHotCollections() {
           </div>
 
           <div className="slider-container">
-            <OwlCarousel key={hotCollectionsData.length} className="owl-theme" {...sliderSettings}>
-              {isLoading ? 
-             hotCollectionsData.map((data) => (
+            <OwlCarousel key={isLoading ? "loading" : `loaded-${hotCollectionsData.length}`} className="owl-theme" {...sliderSettings}>
+              {isLoading || hotCollectionsData.length === 0
+              ? 
+            [...Array(4)].map((_, index) =>(
+                <div
+                  className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
+                  key={index}
+                >
+                  <div className="nft_coll">
+                    <div className="nft_wrap">
+                      <Skeleton width="100%"
+                      height="200px"
+                      borderRadius="8px"/>
+                    </div>
+                    <div className="nft_coll_pp">
+                      <Skeleton width="50px"
+                      height="50px"
+                      borderRadius="50%"/>
+                      <i className="fa fa-check"></i>
+                    </div>
+                    <div className="nft_coll_info">
+                      <Skeleton width="70%"
+                      height="24px"
+                      borderRadius="4px"/>
+                      <Skeleton width="40%"
+                      height="18px"
+                      borderRadius="4px"/>
+                    </div>
+                  </div>
+                </div>
+              ))
+               : hotCollectionsData.map((data) => (
                 <div
                   className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
                   key={data.id}
@@ -105,35 +130,7 @@ async function fetchHotCollections() {
                       <span>ERC-{data.code}</span>
                     </div>
                   </div>
-                </div>
-              )) :hotCollectionsData.map((data) =>(
-                <div
-                  className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
-                  key={data.id}
-                >
-                  <div className="nft_coll">
-                    <div className="nft_wrap">
-                      <Skeleton width="100%"
-                      height="200px"
-                      borderRadius="8px"/>
-                    </div>
-                    <div className="nft_coll_pp">
-                      <Skeleton width="50px"
-                      height="50px"
-                      borderRadius="50%"/>
-                      <i className="fa fa-check"></i>
-                    </div>
-                    <div className="nft_coll_info">
-                      <Skeleton width="70%"
-                      height="24px"
-                      borderRadius="4px"/>
-                      <Skeleton width="40%"
-                      height="18px"
-                      borderRadius="4px"/>
-                    </div>
-                  </div>
-                </div>
-              )) }
+                </div> ))}
             </OwlCarousel>
           </div>
         </div>

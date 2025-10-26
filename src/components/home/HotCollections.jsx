@@ -5,8 +5,13 @@ import OwlCarousel from "react-owl-carousel"
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import Skeleton from "../UI/Skeleton"
+import  AOSanimations  from "../UI/AOSanimations";
+import 'aos/dist/aos.css'
  
 const HotCollections = () => {
+    useEffect(() => {
+    AOSanimations();
+  }, []);
   const [hotCollectionsData, setHotCollectionsData] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
   
@@ -61,12 +66,12 @@ async function fetchHotCollections() {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>Hot Collections</h2>
+              <h2 data-aos="fade-in">Hot Collections</h2>
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
 
-          <div className="slider-container">
+          <div className="slider-container" data-aos="fade-in">
             <OwlCarousel key={isLoading ? "loading" : `loaded-${hotCollectionsData.length}`} className="owl-theme" {...sliderSettings}>
               {isLoading || hotCollectionsData.length === 0
               ? 

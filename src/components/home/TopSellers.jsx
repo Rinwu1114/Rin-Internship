@@ -2,8 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Skeleton from "../UI/Skeleton";
+import  AOSanimations  from "../UI/AOSanimations";
+import 'aos/dist/aos.css'
 
 const TopSellers = () => {
+      useEffect(() => {
+    AOSanimations()
+  }, [])
   const [topSellersData, setTopSellersData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -33,15 +38,15 @@ const TopSellers = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>Top Sellers</h2>
+              <h2 data-aos="fade-in">Top Sellers</h2>
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
           <div className="col-md-12">
-            <ol className="author_list">
+            <ol className="author_list" data-aos="fade-in">
               {isLoading
-                ? new Array(12).fill(0).map((data) => (
-                    <li key={data.id}>
+                ? new Array(12).fill(0).map((_, index) => (
+                    <li key={index}>
                       <div className="author_list_pp">
                         <Skeleton width={50} height={50} borderRadius="50%" />
                         <i className="fa fa-check"></i>

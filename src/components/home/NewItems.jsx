@@ -10,6 +10,16 @@ import "owl.carousel/dist/assets/owl.theme.default.css";
 const NewItems = () => {
   const [newItems, setNewItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+import  AOSanimations  from "../UI/AOSanimations";
+import 'aos/dist/aos.css'
+
+const NewItems = () => {
+      useEffect(() => {
+    AOSanimations()
+  }, [])
+
+  const [ newItems, setNewItems ] = useState([])
+  const [ isLoading, setIsLoading ] = useState(false)
 
   useEffect(() => {
     setIsLoading(true);
@@ -58,7 +68,7 @@ const NewItems = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>New Items</h2>
+              <h2 data-aos="fade-in">New Items</h2>
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
